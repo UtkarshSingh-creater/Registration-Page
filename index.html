@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">    
+    <style>
+        * {
+            box-sizing: border-box; 
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --primary-color: #007bff; 
+            --secondary-color: #0056b3; 
+            --accent-color: #28a745; 
+            --body-bg: #f4f4f9;
+            --text-color: #333;
+            --form-bg: white;
+            --footer-bg: #333;
+            --border-color: #ddd;
+            --input-focus-border: var(--primary-color);
+            --form-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            --bg-image-url: url('https://placehold.co/1920x1080/007bff/ffffff/png?text=Modern+App+Background');
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.4s, color 0.4s;
+            background-image: var(--bg-image-url);
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed; 
+            background-color: var(--body-bg);
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7); 
+            z-index: -1;
+            transition: background-color 0.4s;
+        }
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        header h1 {
+            margin-bottom: 5px;
+        }
+        main {
+            flex-grow: 1; 
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .theme-switcher, .registration-section {
+            width: 100%;
+            max-width: 550px; 
+            margin-bottom: 20px;
+            background: var(--form-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--form-shadow);
+            transition: background-color 0.4s, box-shadow 0.4s;
+        }
+        .theme-switcher {
+            text-align: center;
+        }
+        form h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        fieldset {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        legend {
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 0 10px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--form-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+        small {
+            color: #6a6a6a;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 4px;
+        }
+        a {
+            color: var(--primary-color);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button[type="submit"] {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        button[type="submit"]:hover {
+            background-color: #1e7e34;
+            transform: translateY(-1px);
+        }
+        .theme-switcher h2 {
+            color: var(--primary-color);
+        }
+        .theme-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 0 5px;
+            min-width: 120px;
+            border: 2px solid var(--primary-color);
+            background-color: var(--form-bg);
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+        .theme-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .theme-btn:not(.active):hover {
+            background-color: #f0f8ff; 
+        }
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            min-width: 20px; 
+            height: 20px;
+        }
+        .checkbox-group label {
+            margin-top: 0;
+            display: inline;
+            font-weight: normal;
+        }
+        
+        /* Dark Theme Styles */
+        body.dark-theme {
+            --primary-color: #27ae60;
+            --secondary-color: #1e8449;
+            --accent-color: #f39c12;
+            --body-bg: #121212;
+            --text-color: #e0e0e0;
+            --form-bg: #1e1e1e;
+            --footer-bg: #000;
+            --border-color: #333;
+            --input-focus-border: var(--primary-color);
+            --form-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+        }
+        body.dark-theme::before {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        body.dark-theme header {
+            background: var(--primary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+        body.dark-theme form h2 {
+            color: var(--primary-color);
+        }
+        body.dark-theme legend {
+            color: var(--primary-color);
+        }
+        body.dark-theme input,
+        body.dark-theme select {
+            background-color: #2c2c2c; 
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+        body.dark-theme small {
+            color: #a0a0a0;
+        }
+        body.dark-theme a {
+            color: var(--primary-color);
+        }
+        body.dark-theme button[type="submit"] {
+            background-color: var(--accent-color);
+        }
+        body.dark-theme button[type="submit"]:hover {
+            background-color: #e67e22;
+        }
+        body.dark-theme .theme-btn {
+            border-color: var(--primary-color);
+            background-color: var(--form-bg);
+            color: var(--primary-color);
+        }
+        body.dark-theme .theme-btn.active {
+            background-color: var(--primary-color);
+            color: var(--form-bg);
+        }
+        body.dark-theme .theme-btn:not(.active):hover {
+            background-color: #252525;
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: var(--form-bg);
+            margin: 15% auto; 
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            width: 80%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: var(--form-shadow);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .modal-header {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        .modal-body {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        .close-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .close-btn:hover {
+            background-color: #1e7e34;
+        }
+        body.dark-theme .close-btn {
+            background-color: var(--accent-color);
+        }
+        body.dark-theme .close-btn:hover {
+            background-color: #e67e22;
+        }
+        @media (max-width: 600px) {
+            .theme-switcher, .registration-section {
+                padding: 20px;
+                border-radius: 8px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .theme-btn {
+                margin: 5px 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+
+    <header>
+        <h1>User Registration</h1>
+        <p>Sign up now to get started!</p>
+    </header>
+
+    <main>
+        <div class="theme-switcher">
+            <h2>Select Theme</h2>
+            <div class="button-group">
+                <button id="lightThemeBtn" class="theme-btn active">☀️ Light Theme</button>
+                <button id="darkThemeBtn" class="theme-btn">🌙 Dark Theme</button>
+            </div>
+        </div>
+
+        <div class="registration-section">
+            <form id="registrationForm" novalidate>
+                <h2>Account Details</h2>
+                
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required minlength="5" placeholder="Must be 5-15 characters long">
+                        <small id="username-hint">Must be 5-15 characters long.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required placeholder="e.g., example@domain.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required minlength="8" placeholder="Minimum 8 characters">
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Additional Information</legend>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Select Role:</label>
+                        <select id="role" name="role">
+                            <option value="user">Standard User</option>
+                            <option value="admin">Administrator</option>
+                            <option value="guest">Guest</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms and Conditions</a></label>
+                    </div>
+                </fieldset>
+
+                <button type="submit">Register Account</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Forms Inc.</p>
+    </footer>
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div id="modalHeader" class="modal-header">Message</div>
+            <div id="messageText" class="modal-body"></div>
+            <button id="closeModalBtn" class="close-btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const body = document.body;
+            const lightThemeBtn = document.getElementById('lightThemeBtn');
+            const darkThemeBtn = document.getElementById('darkThemeBtn');
+
+            const messageModal = document.getElementById('messageModal');
+            const messageText = document.getElementById('messageText');
+            const modalHeader = document.getElementById('modalHeader');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            function showMessageBox(message, isSuccess = false) {
+                messageText.textContent = message;
+                modalHeader.textContent = isSuccess ? 'Success!' : 'Error';
+                
+                const headerColor = isSuccess ? 'var(--primary-color)' : '#dc3545';
+                modalHeader.style.color = headerColor;
+                
+                messageModal.classList.add('active');
+                messageModal.style.display = 'flex'; 
+            }
+
+            function closeModal() {
+                messageModal.classList.remove('active');
+                setTimeout(() => {
+                    messageModal.style.display = 'none';
+                }, 300);
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            messageModal.addEventListener('click', (event) => {
+                if (event.target === messageModal) {
+                    closeModal();
+                }
+            });
+
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    body.classList.remove('light-theme');
+                    lightThemeBtn.classList.remove('active');
+                    darkThemeBtn.classList.add('active');
+                } else {
+                    body.classList.remove('dark-theme');
+                    body.classList.add('light-theme');
+                    darkThemeBtn.classList.remove('active');
+                    lightThemeBtn.classList.add('active');
+                }
+                localStorage.setItem('theme', theme); 
+            }
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            lightThemeBtn.addEventListener('click', () => setTheme('light'));
+            darkThemeBtn.addEventListener('click', () => setTheme('dark'));
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                
+                const usernameInput = document.getElementById('username');
+                
+                if (usernameInput.value.length < 5) {
+                    showMessageBox('Username must be at least 5 characters long.', false);
+                    return;
+                }
+                
+                if (form.checkValidity()) {
+                    console.log('Form data submitted:');
+                    const formData = {
+                        username: usernameInput.value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        date_of_birth: document.getElementById('dob').value,
+                        role: document.getElementById('role').value,
+                        terms_agreed: document.getElementById('terms').checked
+                    };
+                    console.log(formData);
+                    
+                    showMessageBox('Registration Successful! (Check console for data)', true);
+                    form.reset(); 
+                } else {
+                    form.reportValidity();
+                    showMessageBox('Please fill out all required fields correctly. Missing fields are highlighted.', false);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
